@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="vi" manifest="css.manifest">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AUTO JAILBREAK PS4 - KENNY YOON</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+        body {
+            background-color: #0b0e14;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow: hidden;
+        }
+        .container {
+            width: 100%;
+            max-width: 580px;
+            background: #121824;
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+        .title {
+            color: #0084ff;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+        .subtitle {
+            color: #64748b;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .row {
+            background: #172030;
+            border: 1px solid #232f45;
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+        }
+        .label {
+            color: #94a3b8;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .value {
+            font-weight: 700;
+            text-align: right;
+            word-break: break-all;
+        }
+        .ok   { color: #22c55e; }
+        .bad  { color: #ef4444; }
+        .warn { color: #eab308; }
+        
+        .loader-box {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .mini-loader {
+            width: 12px;
+            height: 12px;
+            border: 2px solid #232f45;
+            border-top-color: #0084ff;
+            border-radius: 50%;
+            animation: spin 1s infinite linear;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+    <script>
+        history.replaceState(null, null, 'index.html');
+        var histlength = history.length;
+        history.go(-histlength);
+
+        function DLProgress(e) {
+            var percent = Math.round(e.loaded / e.total * 100);
+            var msgs = document.getElementById("msgs");
+            if (msgs) {
+                msgs.innerHTML = '<span class="loader-box"><span class="mini-loader"></span><span class="warn">Đang lưu Cache: ' + percent + '%</span></span>';
+            }
+        }
+
+        function DisplayCacheProgress() {
+            var msgs = document.getElementById("msgs");
+            if (msgs) {
+                msgs.innerHTML = '<span class="ok">Lưu Cache thành công! ✔</span>';
+                setTimeout(function() {
+                    msgs.innerHTML = '<span class="warn">Hãy đóng và mở lại trình duyệt...</span>';
+                }, 1500);
+            }
+        }
+
+        window.applicationCache.addEventListener("progress", DLProgress, false);
+        window.applicationCache.oncached = function(e) { DisplayCacheProgress(); };
+        window.applicationCache.onupdateready = function(e) { DisplayCacheProgress(); };
+        window.applicationCache.onerror = function(e) {
+            var msgs = document.getElementById("msgs");
+            if (msgs) {
+                msgs.innerHTML = '<span class="bad">Lỗi cài Cache! Vui lòng xóa dữ liệu trang...</span>';
+            }
+        };
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <div class="title">AUTO JAILBREAK PS4 - KENNY YOON</div>
+        <div class="subtitle">CẤU HÌNH BỘ NHỚ OFFLINE (FW 10.00 - 11.02)</div>
+
+        <div class="row">
+            <span class="label">PHIÊN BẢN</span>
+            <span class="value ok">FW 10.00 - 11.02</span>
+        </div>
+
+        <div class="row">
+            <span class="label">MANIFEST</span>
+            <span class="value" style="color: #ffffff;">css.manifest</span>
+        </div>
+
+        <div class="row">
+            <span class="label">TRẠNG THÁI</span>
+            <span class="value" id="msgs">
+                <span class="loader-box">
+                    <span class="mini-loader"></span>
+                    <span class="warn">Đang chuẩn bị cài Cache...</span>
+                </span>
+            </span>
+        </div>
+    </div>
+
+</body>
+</html>

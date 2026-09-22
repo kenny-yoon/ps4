@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AUTO JAILBREAK PS4 - KENNY YOON</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #0b0e14;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 580px;
+            background: #121824;
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .title {
+            color: #0084ff;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            color: #64748b;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .row {
+            background: #172030;
+            border: 1px solid #232f45;
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+        }
+
+        .label {
+            color: #94a3b8;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .value {
+            font-weight: 700;
+            text-align: right;
+            word-break: break-all;
+        }
+
+        .ok {
+            color: #22c55e;
+        }
+
+        .bad {
+            color: #ef4444;
+        }
+
+        .warn {
+            color: #eab308;
+        }
+
+        .loader-box {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mini-loader {
+            width: 12px;
+            height: 12px;
+            border: 2px solid #232f45;
+            border-top-color: #0084ff;
+            border-radius: 50%;
+            animation: spin 1s infinite linear;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="title">AUTO JAILBREAK PS4 - KENNY YOON</div>
+        <div class="subtitle">HỖ TRỢ FW 5.05 - 13.52</div>
+
+        <div class="row">
+            <span class="label">FIRMWARE</span>
+            <span class="value" id="fw-info">Đang kiểm tra...</span>
+        </div>
+
+        <div class="row">
+            <span class="label">TẢI TRỌNG</span>
+            <span class="value" style="color: #ffffff;">GoldHEN v2.4b18.12</span>
+        </div>
+
+        <div class="row">
+            <span class="label">NGÀY CẬP NHẬT</span>
+            <span class="value" style="color: #ffffff;">22/09/2026</span>
+        </div>
+
+        <div class="row">
+            <span class="label">TRẠNG THÁI</span>
+            <span class="value" id="msgs">
+                <span class="loader-box">
+                    <span class="mini-loader"></span>
+                    <span class="warn">Đang khởi chạy...</span>
+                </span>
+            </span>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            var uaFull = navigator.userAgent;
+            var match = uaFull.match(/PlayStation 4[ /]([\d.]+)/i);
+            var isPS4 = match !== null;
+            var fwVersion = isPS4 ? match[1] : "Unknown";
+            var fwNum = parseFloat(fwVersion);
+
+            var fwInfo = document.getElementById("fw-info");
+            var msgs = document.getElementById("msgs");
+
+            function setStatus(msgText, cls) {
+                msgs.innerHTML = '<span class="' + (cls || '') + '">' + msgText + '</span>';
+            }
+
+            function onScriptError() {
+                setStatus("Lỗi tệp! Xóa dữ liệu web & cài lại Cache...", "bad");
+            }
+
+            // Nạp script tối ưu bộ nhớ
+            function loadScript(srcPath, isModule, onLoadCb) {
+                var script = document.createElement('script');
+                if (isModule) script.type = 'module';
+                script.src = srcPath;
+                script.onerror = onScriptError;
+                script.onload = function () {
+                    if (onLoadCb) onLoadCb();
+                    // Dọn dẹp DOM giúp giải phóng bộ nhớ RAM
+                    setTimeout(function () {
+                        if (script.parentNode) script.parentNode.removeChild(script);
+                    }, 1000);
+                };
+                document.head.appendChild(script);
+            }
+
+            if (!isPS4) {
+                fwInfo.textContent = "Không phải PS4";
+                setStatus("Chỉ hỗ trợ máy PS4 FW 5.05 và 7.00 - 13.52", "bad");
+            } else {
+                fwInfo.innerHTML = fwVersion + ' · <span class="ok">Được hỗ trợ</span>';
+
+                if (window.applicationCache && window.applicationCache.status == 0) {
+                    if (fwNum == 5.05 || fwNum == 5.07) {
+                        window.location.replace("cache505.html");
+                    } else if (fwNum >= 7.00 && fwNum <= 8.52) {
+                        window.location.replace("cache700.html");
+                    } else if (fwNum >= 9.00 && fwNum <= 9.60) {
+                        window.location.replace("cache900.html");
+                    } else if (fwNum >= 10.00 && fwNum <= 11.02) {
+                        window.location.replace("cachecss.html");
+                    } else if (fwNum >= 11.50 && fwNum <= 13.52) {
+                        window.location.replace("cacheslopkit.html");
+                    } else {
+                        fwInfo.innerHTML = fwVersion + ' · <span class="bad">Không hỗ trợ</span>';
+                        setStatus("Phiên bản FW không được hỗ trợ", "bad");
+                    }
+                } else {
+                    setStatus("Đang tải GoldHEN... Vui lòng chờ", "warn");
+
+                    if (fwNum == 5.05 || fwNum == 5.07) {
+                        loadScript("505/exploit.js", false);
+                    }
+                    else if (fwNum >= 7.00 && fwNum <= 8.52) {
+                        loadScript("700/alert.js", true);
+                    }
+                    else if (fwNum >= 9.00 && fwNum <= 9.60) {
+                        loadScript("900/alert.js", true);
+                    }
+                    else if (fwNum >= 10.00 && fwNum <= 11.02) {
+                        loadScript("css/main.js", false, function () {
+                            setTimeout(function () {
+                                if (typeof doJb === "function") doJb();
+                            }, 500);
+                        });
+                    }
+                    else if (fwNum >= 11.50 && fwNum <= 12.02) {
+                        loadScript("slopkit/chain_lapse.js", true);
+                    }
+                    else if (fwNum >= 12.50 && fwNum <= 13.00) {
+                        loadScript("slopkit/chain_poops.js", true);
+                    }
+                    else if (fwNum >= 13.02 && fwNum <= 13.52) {
+                        loadScript("slopkit/jb.js?v=10", true);
+                    }
+                }
+            }
+        })();
+    </script>
+</body>
+
+</html>
